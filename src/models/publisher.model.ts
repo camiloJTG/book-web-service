@@ -8,26 +8,20 @@ import {
 } from 'typeorm';
 import { Book } from './book.model';
 
-@Entity({ name: 'user' })
-export class User {
+@Entity({ name: 'publisher' })
+export class Publisher {
   @PrimaryGeneratedColumn()
   id!: string;
 
-  @Column({ unique: true })
+  @Column()
   name!: string;
 
-  @Column({ unique: true })
-  email!: string;
-
-  @Column()
-  password!: string;
-
-  @OneToMany(() => Book, (book) => book.user)
-  books!: Book[];
+  @OneToMany(() => Book, (book) => book.publisher)
+  book!: Book[];
 
   @CreateDateColumn()
   createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt!: Date;
+  updateAt!: Date;
 }
