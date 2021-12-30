@@ -12,6 +12,8 @@ const connection = async () =>
     username,
     password,
     database,
+    entities: ['src/models/*.ts', 'src/models/*.js'],
+    synchronize: false,
   });
 
 (async () => {

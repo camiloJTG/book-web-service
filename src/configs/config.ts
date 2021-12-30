@@ -1,7 +1,7 @@
 export default {
   server: {
     port: process.env.PORT || 3000,
-    dev: process.env.NOED_ENV !== 'production',
+    dev: process.env.NODE_ENV !== 'production',
   },
   db: {
     host: process.env.MYSQL_HOST,
