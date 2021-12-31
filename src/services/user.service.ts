@@ -39,7 +39,10 @@ export const getOneUser = async (id: string): Promise<User | string> => {
   }
 };
 
-export const updateUser = async (id: string, user: userReq) => {
+export const updateUser = async (
+  id: string,
+  user: userReq
+): Promise<User | string> => {
   try {
     const userRepo = getRepository(User);
 
