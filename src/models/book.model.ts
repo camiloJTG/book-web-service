@@ -11,7 +11,7 @@ import { User } from './user.model';
 
 @Entity({ name: 'book' })
 export class Book {
-  @PrimaryGeneratedColumn()
+  @Column({ primary: true })
   id!: string;
 
   @Column()

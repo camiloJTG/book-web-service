@@ -10,7 +10,7 @@ import { Book } from './book.model';
 
 @Entity({ name: 'publisher' })
 export class Publisher {
-  @PrimaryGeneratedColumn()
+  @Column({ primary: true })
   id!: string;
 
   @Column()
