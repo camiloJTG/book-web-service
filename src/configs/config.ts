@@ -10,4 +10,8 @@ export default {
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
   },
+  orm: {
+    entities: process.env.ORM_ENTITIES,
+    synchronize: process.env.ORM_SYNCHRONIZE,
+  },
 };

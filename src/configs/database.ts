@@ -2,8 +2,10 @@ import { createConnection, Connection } from 'typeorm';
 
 import config from './config';
 
-const { db } = config;
+const { db, orm } = config;
 const { database, host, password, port, username } = db;
+const { entities, synchronize } = orm;
+
 const connection = async () =>
   await createConnection({
     type: 'mysql',
@@ -12,8 +14,8 @@ const connection = async () =>
     username,
     password,
     database,
-    entities: ['src/models/*.ts', 'src/models/*.js'],
-    synchronize: false,
+    entities: [entities!],
+    synchronize: (synchronize === 'true')!,
   });
 
 (async () => {
