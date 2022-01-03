@@ -14,4 +14,11 @@ export default {
     entities: process.env.ORM_ENTITIES,
     synchronize: process.env.ORM_SYNCHRONIZE,
   },
+  cloudinary: {
+    apiName: process.env.CLOUDINARY_API_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET,
+    mainFolder: process.env.CLOUDINARY_API_FOLDER_MAIN,
+    booksFolder: process.env.CLOUDINARY_API_FOLDER_BOOKS,
+  },
 };
