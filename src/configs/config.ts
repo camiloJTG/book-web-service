@@ -21,4 +21,8 @@ export default {
     mainFolder: process.env.CLOUDINARY_API_FOLDER_MAIN,
     booksFolder: process.env.CLOUDINARY_API_FOLDER_BOOKS,
   },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    exp: process.env.JWT_EXP,
+  },
 };
