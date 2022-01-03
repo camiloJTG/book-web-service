@@ -3,6 +3,7 @@ import { response2xx, response4xx } from '../../utils/responses';
 import { checkReq } from '../middlewares/handlerValidation';
 import * as userSvc from '../../services/user.service';
 import * as userSch from '../schemas/user.schema';
+import { checkAuth } from '../middlewares/handlerAuth';
 
 const router = Router();
 
@@ -23,6 +24,7 @@ router.post(
 
 router.get(
   '/:id',
+  checkAuth,
   checkReq({ id: userSch.idSchema }, 'params'),
   async (req, res, next) => {
     try {
@@ -38,6 +40,7 @@ router.get(
 
 router.put(
   '/:id',
+  checkAuth,
   checkReq({ id: userSch.idSchema }, 'params'),
   checkReq(userSch.updateUserSch, 'body'),
   async (req, res, next) => {

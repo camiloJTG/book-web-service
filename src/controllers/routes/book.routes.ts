@@ -1,16 +1,18 @@
-import { Request, Router } from 'express';
+import { Router } from 'express';
 import { response2xx, response4xx } from '../../utils/responses';
 import { validateQuery } from '../../utils/beansUtils';
 import { checkReq } from '../middlewares/handlerValidation';
 import handlerFile from '../middlewares/handlerFile';
 import * as bookSvc from '../../services/book.service';
 import * as bookSch from '../schemas/book.schema';
+import { checkAuth } from '../middlewares/handlerAuth';
 
 const router = Router();
 
 router.post(
   '/',
   handlerFile.single('image'),
+  checkAuth,
   checkReq(bookSch.createBook, 'body'),
   async (req, res, next) => {
     try {
@@ -27,6 +29,7 @@ router.post(
 
 router.put(
   '/:id',
+  checkAuth,
   checkReq({ id: bookSch.reqParams.bookId }, 'params'),
   checkReq(bookSch.updateBook, 'body'),
   handlerFile.single('image'),
@@ -48,6 +51,7 @@ router.put(
 
 router.get(
   '/:bookId/user/:userId',
+  checkAuth,
   checkReq(bookSch.reqParams, 'params'),
   async (req, res, next) => {
     try {
@@ -64,6 +68,7 @@ router.get(
 
 router.get(
   '/user/:userId',
+  checkAuth,
   checkReq({ userId: bookSch.reqParams.userId }, 'params'),
   async (req, res, next) => {
     try {
@@ -81,6 +86,7 @@ router.get(
 
 router.get(
   '/author-and-publisher/:userId',
+  checkAuth,
   checkReq({ userId: bookSch.reqParams.userId }, 'params'),
   async (req, res, next) => {
     try {
@@ -97,6 +103,7 @@ router.get(
 
 router.get(
   '/search/:userId/value/:value',
+  checkAuth,
   checkReq(bookSch.reqSearch, 'params'),
   async (req, res, next) => {
     try {
@@ -111,16 +118,21 @@ router.get(
   }
 );
 
-router.delete('/:bookId/user/:userId', async (req, res, next) => {
-  try {
-    const { bookId, userId } = req.params;
-    const result = await bookSvc.deleteBook(bookId, userId);
-    typeof result === 'string'
-      ? response4xx(res, result, 404)
-      : response2xx(res, result, 200);
-  } catch (error) {
-    throw error;
+router.delete(
+  '/:bookId/user/:userId',
+  checkAuth,
+  checkReq(bookSch.reqParams, 'params'),
+  async (req, res, next) => {
+    try {
+      const { bookId, userId } = req.params;
+      const result = await bookSvc.deleteBook(bookId, userId);
+      typeof result === 'string'
+        ? response4xx(res, result, 404)
+        : response2xx(res, result, 200);
+    } catch (error) {
+      throw error;
+    }
   }
-});
+);
 
 export default router;
