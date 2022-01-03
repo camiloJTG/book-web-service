@@ -2,7 +2,9 @@ import { getRepository } from 'typeorm';
 import { v4 as randomId } from 'uuid';
 import { User } from '../models/user.model';
 import { userReq } from '../interfaces/user.interface';
-import { encrypt } from '../utils/bcrypt';
+import { login, payload, tokenResponse } from '../interfaces/auth.interface';
+import { encrypt, validateHash } from '../utils/bcrypt';
+import { createToken } from '../utils/jwt';
 
 export const createUser = async (user: userReq): Promise<User | string> => {
   try {
@@ -66,6 +68,44 @@ export const updateUser = async (
       password: user.password,
     });
     return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getByUsername = async (
+  username: string
+): Promise<User[] | string> => {
+  try {
+    const userRepo = getRepository(User);
+    const findUser = await userRepo.find({ where: { name: username } });
+    if (findUser.length === 0) return 'No data found';
+    return findUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const loginUser = async (
+  credentials: login
+): Promise<tokenResponse | string> => {
+  try {
+    const userRepo = getRepository(User);
+    const { password, username } = credentials;
+
+    const validateUser = await userRepo.find({ name: username });
+    if (validateUser.length === 0) return 'Invalid credentials';
+
+    const passOk = await validateHash(password, validateUser[0].password);
+    if (!passOk) return 'Invalid credentials';
+
+    const payload: payload = {
+      email: validateUser[0].email,
+      username: validateUser[0].name,
+    };
+
+    const tokenBody = createToken(payload);
+    return tokenBody;
   } catch (error) {
     throw error;
   }
