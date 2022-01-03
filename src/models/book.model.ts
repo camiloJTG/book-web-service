@@ -6,7 +6,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Publisher } from './publisher.model';
 import { User } from './user.model';
 
 @Entity({ name: 'book' })
@@ -35,11 +34,14 @@ export class Book {
   @Column()
   urlImg!: string;
 
+  @Column()
+  publisher!: string;
+
+  @Column()
+  imgPublicId: string;
+
   @ManyToOne(() => User, (user) => user.books)
   user!: User;
-
-  @ManyToOne(() => Publisher, (publisher) => publisher)
-  publisher!: Publisher;
 
   @CreateDateColumn()
   createdAt!: Date;
