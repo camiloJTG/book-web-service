@@ -73,19 +73,6 @@ export const updateUser = async (
   }
 };
 
-export const getByUsername = async (
-  username: string
-): Promise<User[] | string> => {
-  try {
-    const userRepo = getRepository(User);
-    const findUser = await userRepo.find({ where: { name: username } });
-    if (findUser.length === 0) return 'No data found';
-    return findUser;
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const loginUser = async (
   credentials: login
 ): Promise<tokenResponse | string> => {
@@ -100,6 +87,7 @@ export const loginUser = async (
     if (!passOk) return 'Invalid credentials';
 
     const payload: payload = {
+      id: validateUser[0].id,
       email: validateUser[0].email,
       username: validateUser[0].name,
     };
