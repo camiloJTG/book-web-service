@@ -12,7 +12,7 @@ export const createToken = (payload: payload): tokenResponse => {
   const tokenStructure: tokenResponse = {
     token,
     type: 'Bearer',
-    exp: `${timeExpire} seconds`,
+    exp: `${parseInt(timeExpire) * 60} seconds`,
   };
   return tokenStructure;
 };
