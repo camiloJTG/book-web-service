@@ -25,4 +25,8 @@ export default {
     secret: process.env.JWT_SECRET,
     exp: process.env.JWT_EXP,
   },
+  swagger: {
+    pathFile: process.env.SWAGGER_PATH_BASE,
+    urls: process.env.SWAGGER_URLS,
+  },
 };
