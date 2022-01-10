@@ -1,0 +1,387 @@
+{
+	"info": {
+		"_postman_id": "b230f567-cf14-4699-b064-b8ce1f78a4c9",
+		"name": "Books",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create book",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU5ODM3ZGM3LWQxMjMtNDMxZS04NWViLTg2OTg1NTMxMWI2NiIsImVtYWlsIjoicGVwZXhAZ21haWwuY29tIiwidXNlcm5hbWUiOiJwZXBleCIsImlhdCI6MTY0MTgyNTQyNywiZXhwIjoxNjQxODI5MDI3fQ.siSeyuWb1gXbbQtnrvozzjQNHAeedMxa3h4jxJ2-lWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "test",
+							"type": "default"
+						},
+						{
+							"key": "subname",
+							"value": "test",
+							"type": "default"
+						},
+						{
+							"key": "author",
+							"value": "test",
+							"type": "default"
+						},
+						{
+							"key": "pages",
+							"value": "20012",
+							"type": "default"
+						},
+						{
+							"key": "synopsis",
+							"value": "testdsdsasdsa",
+							"type": "default"
+						},
+						{
+							"key": "rating",
+							"value": "3",
+							"type": "default"
+						},
+						{
+							"key": "userId",
+							"value": "9dcb890f-a619-4e25-917e-6c74e36c9791",
+							"type": "default"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/camiloJTG/Downloads/WhatsApp Image 2021-11-13 at 15.01.29.jpeg"
+						},
+						{
+							"key": "publisher",
+							"value": "alfaguara",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{LOCAL_URL_BASE}}/books",
+					"host": [
+						"{{LOCAL_URL_BASE}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get one book",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU5ODM3ZGM3LWQxMjMtNDMxZS04NWViLTg2OTg1NTMxMWI2NiIsImVtYWlsIjoicGVwZXhAZ21haWwuY29tIiwidXNlcm5hbWUiOiJwZXBleCIsImlhdCI6MTY0MTg0MTY3NywiZXhwIjoxNjQxODQ1Mjc3fQ.aO9lIAzvq_tOPa2arsmZyB0WL9Im-I5mOnc86lKQzgU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_URL_BASE}}/books/:bookId/user/:userId",
+					"host": [
+						"{{LOCAL_URL_BASE}}"
+					],
+					"path": [
+						"books",
+						":bookId",
+						"user",
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "bookId",
+							"value": "7c9264fc-69bc-4190-ab55-ce3176776199"
+						},
+						{
+							"key": "userId",
+							"value": "9dcb890f-a619-4e25-917e-6c74e36c9791"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all book by user id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU5ODM3ZGM3LWQxMjMtNDMxZS04NWViLTg2OTg1NTMxMWI2NiIsImVtYWlsIjoicGVwZXhAZ21haWwuY29tIiwidXNlcm5hbWUiOiJwZXBleCIsImlhdCI6MTY0MTg0NTMzOSwiZXhwIjoxNjQxODQ4OTM5fQ.HUzDiDzQKvQQCHtZxmdyXQUyMnC9otdgVosPe6vPhFI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_URL_BASE}}/books/user/:userId/?take=3&skip=4",
+					"host": [
+						"{{LOCAL_URL_BASE}}"
+					],
+					"path": [
+						"books",
+						"user",
+						":userId",
+						""
+					],
+					"query": [
+						{
+							"key": "take",
+							"value": "3"
+						},
+						{
+							"key": "skip",
+							"value": "4"
+						}
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "9dcb890f-a619-4e25-917e-6c74e36c9791"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all authors and publishers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU5ODM3ZGM3LWQxMjMtNDMxZS04NWViLTg2OTg1NTMxMWI2NiIsImVtYWlsIjoicGVwZXhAZ21haWwuY29tIiwidXNlcm5hbWUiOiJwZXBleCIsImlhdCI6MTY0MTg0MTY3NywiZXhwIjoxNjQxODQ1Mjc3fQ.aO9lIAzvq_tOPa2arsmZyB0WL9Im-I5mOnc86lKQzgU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_URL_BASE}}/books/author-and-publisher/:userId/",
+					"host": [
+						"{{LOCAL_URL_BASE}}"
+					],
+					"path": [
+						"books",
+						"author-and-publisher",
+						":userId",
+						""
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "9dcb890f-a619-4e25-917e-6c74e36c9791"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get book by filter",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU5ODM3ZGM3LWQxMjMtNDMxZS04NWViLTg2OTg1NTMxMWI2NiIsImVtYWlsIjoicGVwZXhAZ21haWwuY29tIiwidXNlcm5hbWUiOiJwZXBleCIsImlhdCI6MTY0MTg0MTY3NywiZXhwIjoxNjQxODQ1Mjc3fQ.aO9lIAzvq_tOPa2arsmZyB0WL9Im-I5mOnc86lKQzgU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_URL_BASE}}/books/search/:userId/value/:value?take=3&skip=4",
+					"host": [
+						"{{LOCAL_URL_BASE}}"
+					],
+					"path": [
+						"books",
+						"search",
+						":userId",
+						"value",
+						":value"
+					],
+					"query": [
+						{
+							"key": "take",
+							"value": "3"
+						},
+						{
+							"key": "skip",
+							"value": "4"
+						}
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "9dcb890f-a619-4e25-917e-6c74e36c9791"
+						},
+						{
+							"key": "value",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update book",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU5ODM3ZGM3LWQxMjMtNDMxZS04NWViLTg2OTg1NTMxMWI2NiIsImVtYWlsIjoicGVwZXhAZ21haWwuY29tIiwidXNlcm5hbWUiOiJwZXBleCIsImlhdCI6MTY0MTg0MTY3NywiZXhwIjoxNjQxODQ1Mjc3fQ.aO9lIAzvq_tOPa2arsmZyB0WL9Im-I5mOnc86lKQzgU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Percy jackson",
+							"type": "default"
+						},
+						{
+							"key": "subname",
+							"value": "test",
+							"type": "default",
+							"disabled": true
+						},
+						{
+							"key": "author",
+							"value": "Rick Riordan",
+							"type": "default"
+						},
+						{
+							"key": "pages",
+							"value": "20012",
+							"type": "default",
+							"disabled": true
+						},
+						{
+							"key": "synopsis",
+							"value": "un libro de mitología griega",
+							"type": "default"
+						},
+						{
+							"key": "rating",
+							"value": "4",
+							"type": "default"
+						},
+						{
+							"key": "userId",
+							"value": "9dcb890f-a619-4e25-917e-6c74e36c9791",
+							"type": "default",
+							"disabled": true
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/camiloJTG/Downloads/WhatsApp Image 2021-11-13 at 15.01.29.jpeg",
+							"disabled": true
+						},
+						{
+							"key": "publisher",
+							"value": "2008",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{LOCAL_URL_BASE}}/books/:id",
+					"host": [
+						"{{LOCAL_URL_BASE}}"
+					],
+					"path": [
+						"books",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "7c9264fc-69bc-4190-ab55-ce3176776199"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete book",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU5ODM3ZGM3LWQxMjMtNDMxZS04NWViLTg2OTg1NTMxMWI2NiIsImVtYWlsIjoicGVwZXhAZ21haWwuY29tIiwidXNlcm5hbWUiOiJwZXBleCIsImlhdCI6MTY0MTg0NTMzOSwiZXhwIjoxNjQxODQ4OTM5fQ.HUzDiDzQKvQQCHtZxmdyXQUyMnC9otdgVosPe6vPhFI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{LOCAL_URL_BASE}}/books/:id/user/:userId",
+					"host": [
+						"{{LOCAL_URL_BASE}}"
+					],
+					"path": [
+						"books",
+						":id",
+						"user",
+						":userId"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "0e402fed-78c4-4ac6-9776-e61bd5098a4a"
+						},
+						{
+							"key": "userId",
+							"value": "9dcb890f-a619-4e25-917e-6c74e36c9791"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
