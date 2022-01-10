@@ -1,21 +1,9 @@
 import swaggerDoc, { Options } from 'swagger-jsdoc';
 import { join } from 'path';
 import config from '../configs/config';
-// import { servers } from '../interfaces/swagger.interface';
 
-const { pathFile, urls } = config.swagger;
+const { pathFile } = config.swagger;
 const apis = join(__dirname, pathFile);
-/*const getServers = (servers: string): servers[] => {
-  try {
-    let newArray: servers[] = [];
-    const result = servers.split(' ').map((x) => {
-      newArray.push({ url: x });
-    });
-    return newArray;
-  } catch (error) {
-    throw `Error in swagger configuration. Error: ${error}`;
-  }
-};*/
 
 const opt: Options = {
   definition: {
@@ -23,7 +11,7 @@ const opt: Options = {
     info: {
       title: 'Books',
       version: '1.0.0',
-      description: 'Documentación de los servicios del proyecto "Books"',
+      description: 'Services document for "Books" project',
     },
   },
   apis: [apis],

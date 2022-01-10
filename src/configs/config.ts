@@ -27,6 +27,5 @@ export default {
   },
   swagger: {
     pathFile: process.env.SWAGGER_PATH_BASE,
-    urls: process.env.SWAGGER_URLS,
   },
 };
