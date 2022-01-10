@@ -89,6 +89,53 @@
  *                  application/json:
  *                      schema:
  *                          $ref: '#/definitions/response5xx'
+ *  delete:
+ *      security:
+ *          - bearerAuth: []
+ *      tags:
+ *          - Book module
+ *      description: Delete a book
+ *      parameters:
+ *          - in: path
+ *            name: bookId
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Auto increment id associated to book
+ *          - in: path
+ *            name: userId
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Auto increment id associated to user
+ *      responses:
+ *          200:
+ *              description: Obtain the data of the searched book
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          properties:
+ *                              error:
+ *                                  type: boolean
+ *                                  example: false
+ *                              status:
+ *                                  type: integer
+ *                                  example: 200
+ *                              body:
+ *                                  allOf:
+ *                                      - $ref: '#/definitions/deleteBookRes'
+ *          400:
+ *              description: Response associated with data entry errors
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/definitions/response4xx'
+ *          500:
+ *              description: Response associated with internal error server
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/definitions/response5xx'
  * /api/books/user/{userId}:
  *  get:
  *      security:
@@ -128,7 +175,155 @@
  *                                  example: 200
  *                              body:
  *                                  allOf:
- *                                      - $ref: '#/definitions/createBookRes'
+ *                                      - $ref: '#/definitions/paginatorRes'
+ *          400:
+ *              description: Response associated with data entry errors
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/definitions/response4xx'
+ *          500:
+ *              description: Response associated with internal error server
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/definitions/response5xx'
+ * /api/books/author-and-publisher/{userId}:
+ *  get:
+ *      security:
+ *          - bearerAuth: []
+ *      tags:
+ *          - Book module
+ *      description: Get all publishers and authors registered in a user account
+ *      parameters:
+ *          - in: path
+ *            name: userId
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Auto increment id
+ *      responses:
+ *          200:
+ *              description: Books paginated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          properties:
+ *                              error:
+ *                                  type: boolean
+ *                                  example: false
+ *                              status:
+ *                                  type: integer
+ *                                  example: 200
+ *                              body:
+ *                                  allOf:
+ *                                      - $ref: '#/definitions/publisherAndAuthorRes'
+ *          400:
+ *              description: Response associated with data entry errors
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/definitions/response4xx'
+ *          500:
+ *              description: Response associated with internal error server
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/definitions/response5xx'
+ * /api/books/search/{userId}/value/{value}:
+ *  get:
+ *      security:
+ *          - bearerAuth: []
+ *      tags:
+ *          - Book module
+ *      description: Get all publishers and authors registered in a user account
+ *      parameters:
+ *          - in: path
+ *            name: userId
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Auto increment id
+ *          - in: path
+ *            name: value
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Term to search (name - publisher - author and rating)
+ *          - in: query
+ *            name: take
+ *            required: true
+ *            schema:
+ *              type: number
+ *          - in: query
+ *            name: skip
+ *            required: true
+ *            schema:
+ *              type: number
+ *      responses:
+ *          200:
+ *              description: Books paginated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          properties:
+ *                              error:
+ *                                  type: boolean
+ *                                  example: false
+ *                              status:
+ *                                  type: integer
+ *                                  example: 200
+ *                              body:
+ *                                  allOf:
+ *                                      - $ref: '#/definitions/paginatorRes'
+ *          400:
+ *              description: Response associated with data entry errors
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/definitions/response4xx'
+ *          500:
+ *              description: Response associated with internal error server
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/definitions/response5xx'
+ * /api/books/{id}:
+ *  put:
+ *      security:
+ *          - bearerAuth: []
+ *      tags:
+ *          - Book module
+ *      description: Update a book
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Auto increment id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              multipart/form-data:
+ *                  schema:
+ *                       $ref: '#/definitions/updateBookReq'
+ *      responses:
+ *          200:
+ *              description: Books paginated
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          properties:
+ *                              error:
+ *                                  type: boolean
+ *                                  example: false
+ *                              status:
+ *                                  type: integer
+ *                                  example: 200
+ *                              body:
+ *                                  allOf:
+ *                                      - $ref: '#/definitions/updateBookReq'
  *          400:
  *              description: Response associated with data entry errors
  *              content:
@@ -251,12 +446,27 @@
  *          updatedAt:
  *            type: string
  *            format: date
- *  createBookRes:
+ *  paginatorRes:
+ *      type: array
+ *      items:
+ *          oneOf:
+ *              - $ref: '#/definitions/createBookRes'
+ *  publisherAndAuthorRes:
  *      type: object
  *      properties:
- *          id:
- *            type: string
- *            description: Auto increment value generate by service
+ *          authors:
+ *              type: array
+ *              items:
+ *                  type: string
+ *                  description: Author name
+ *          publisher:
+ *              type: array
+ *              items:
+ *                  type: string
+ *                  description: Publisher name
+ *  updateBookReq:
+ *      type: object
+ *      properties:
  *          name:
  *            type: string
  *            description: Book name
@@ -278,18 +488,22 @@
  *          userId:
  *            type: string
  *            description: Id associated to user
- *          urlImg:
+ *          image:
  *            type: string
- *            description: Url the images
+ *            description: Image to upload
+ *            format: binary
  *          publisher:
  *            type: string
  *            description: Publisher of the book
- *          createdAt:
- *            type: string
- *            format: date
- *          updatedAt:
- *            type: string
- *            format: date
+ *  deleteBookRes:
+ *      type: object
+ *      properties:
+ *          raw:
+ *            type: array
+ *            items:
+ *              type: string
+ *          affected:
+ *              type: number
  * components:
  *  securitySchemes:
  *      bearerAuth:
