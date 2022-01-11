@@ -19,17 +19,20 @@ const checkError = (msg: Error | string, req: Request, res: Response) => {
   if (typeof msg === 'string') {
     switch (msg) {
       case 'ValidationError':
-        return response4xx(res, msg, 400);
+        return response4xx(req, res, msg, 400);
 
       default:
-        return response5xx(res, msg, 500);
+        return response5xx(req, res, msg, 500);
     }
   }
-  switch (msg.name) {
-    case 'ValidationError':
-      return response4xx(res, msg, 400);
+  if (msg) {
+    switch (msg.name) {
+      case 'ValidationError':
+        return response4xx(req, res, msg, 400);
 
-    default:
-      return response5xx(res, msg.message, 500);
+      default:
+        return response5xx(req, res, msg.message, 500);
+    }
   }
+  return response5xx(req, res, 'Internal server error', 500);
 };
