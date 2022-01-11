@@ -1,4 +1,5 @@
-import { Response } from 'express';
+import { Response, Request } from 'express';
+import { deleteLocalFile } from './files';
 
 export const response2xx = (
   res: Response,
@@ -13,10 +14,12 @@ export const response2xx = (
 };
 
 export const response4xx = (
+  req: Request,
   res: Response,
   message: Error | string,
   status: number
 ) => {
+  if (req.file) deleteLocalFile(req.file.path);
   return res.status(status).json({
     error: true,
     statusCode: status,
@@ -25,10 +28,12 @@ export const response4xx = (
 };
 
 export const response5xx = (
+  req: Request,
   res: Response,
   message: Error | String,
   status: number
 ) => {
+  if (req.file) deleteLocalFile(req.file.path);
   return res.status(status).json({
     error: true,
     statusCode: status,
