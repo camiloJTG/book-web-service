@@ -14,7 +14,7 @@ router.post(
     try {
       const result = await userSvc.createUser(req.body);
       typeof result === 'string'
-        ? response4xx(res, result, 400)
+        ? response4xx(req, res, result, 400)
         : response2xx(res, result, 201);
     } catch (error) {
       next(error);
@@ -30,7 +30,7 @@ router.get(
     try {
       const result = await userSvc.getOneUser(req.params.id);
       typeof result === 'string'
-        ? response4xx(res, result, 404)
+        ? response4xx(req, res, result, 404)
         : response2xx(res, result, 200);
     } catch (error) {
       next(error);
@@ -47,7 +47,7 @@ router.put(
     try {
       const result = await userSvc.updateUser(req.params.id, req.body);
       typeof result === 'string'
-        ? response4xx(res, result, 400)
+        ? response4xx(req, res, result, 400)
         : response2xx(res, result, 200);
     } catch (error) {
       next(error);

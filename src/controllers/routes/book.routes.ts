@@ -16,10 +16,10 @@ router.post(
   checkReq(bookSch.createBook, 'body'),
   async (req, res, next) => {
     try {
-      if (!req.file) response4xx(res, 'The image field is required', 400);
+      if (!req.file) response4xx(req, res, 'The image field is required', 400);
       const result = await bookSvc.createBook(req.body, req.file!);
       typeof result === 'string'
-        ? response4xx(res, result, 404)
+        ? response4xx(req, res, result, 404)
         : response2xx(res, result, 201);
     } catch (error) {
       next(error);
@@ -41,7 +41,7 @@ router.put(
         req.file!
       );
       typeof result === 'string'
-        ? response4xx(res, result, 404)
+        ? response4xx(req, res, result, 404)
         : response2xx(res, result, 201);
     } catch (error) {
       next(error);
@@ -58,7 +58,7 @@ router.get(
       const { bookId, userId } = req.params;
       const result = await bookSvc.getOneBook(bookId, userId);
       typeof result === 'string'
-        ? response4xx(res, result, 400)
+        ? response4xx(req, res, result, 400)
         : response2xx(res, result, 200);
     } catch (error) {
       next(error);
@@ -76,7 +76,7 @@ router.get(
       const { cant, page } = validateQuery(req);
       const result = await bookSvc.getAllBooks(userId, cant, page);
       typeof result === 'string'
-        ? response4xx(res, result, 400)
+        ? response4xx(req, res, result, 400)
         : response2xx(res, result, 200);
     } catch (error) {
       next(error);
@@ -93,7 +93,7 @@ router.get(
       const { userId } = req.params;
       const result = await bookSvc.getPublisherAndAuthors(userId);
       typeof result === 'string'
-        ? response4xx(res, result, 400)
+        ? response4xx(req, res, result, 400)
         : response2xx(res, result, 200);
     } catch (error) {
       next(error);
@@ -110,7 +110,7 @@ router.get(
       const { userId, value } = req.params;
       const result = await bookSvc.searchByValue(userId, value);
       typeof result === 'string'
-        ? response4xx(res, result, 400)
+        ? response4xx(req, res, result, 400)
         : response2xx(res, result, 200);
     } catch (error) {
       next(error);
@@ -127,7 +127,7 @@ router.delete(
       const { bookId, userId } = req.params;
       const result = await bookSvc.deleteBook(bookId, userId);
       typeof result === 'string'
-        ? response4xx(res, result, 404)
+        ? response4xx(req, res, result, 404)
         : response2xx(res, result, 200);
     } catch (error) {
       throw error;
